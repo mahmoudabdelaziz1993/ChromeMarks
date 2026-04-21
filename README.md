@@ -1,7 +1,3 @@
-إليك النسخة المحدثة من الـ **README** لمشروع **ChromeMarks**؛ أضفت فيها رابط الـ Portfolio الخاص بك ليظهر بشكل احترافي، وحدثت الـ Installation guide ليكون موجهاً للمطورين بما أنك لن ترفعه على المتجر الرسمي:
-
-***
-
 # ChromeMarks
 
 **ChromeMarks** is a high-performance, developer-centric bookmark manager built for speed, precision, and a seamless organization experience. It reimagines the native Chrome bookmark manager with a modern stack and an "OS-level" feel.
