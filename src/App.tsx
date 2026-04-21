@@ -51,7 +51,7 @@ export function App() {
         {/* <H4 className="font-medium">Project ready!</H4> */}
         {/* here goes the list of bookmarks recursively */}
         <div className="flex-1 min-h-0 flex flex-col relative"> {/* الـ container ده مهم عشان الـ scroll يشتغل صح */}
-          <ScrollArea className="h-80 flex flex-col pe-4">
+          <ScrollArea className="h-80 flex flex-col ">
             <div className="flex flex-col gap-1 h-auto min-h-full pb-4">
               {bookmarks.length > 0 ? (
                 bookmarks.map((node) => (

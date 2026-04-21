@@ -1,43 +1,55 @@
-// src/lib/chrome-actions.ts
-
 import type { TabNode } from "@/types";
-
 
 export const pinExtension = () => {
   chrome.tabs.create({ url: "chrome://extensions/shortcuts" });
 };
 
-
-/**
- * Closes the current popup window.
- * This function should be called by the popup itself to close.
- * If not called, the popup will remain open until the user closes it.
- * @returns {undefined}
- */
 export const closePopup = () => {
   window.close();
 };
 
-
-/**
- * Adds the current page to the bookmarks.
- * If the page is already bookmarked, does nothing.
- * If the page is not bookmarked, creates a new bookmark with the page's title and URL.
- * @param {chrome.tabs.Tab} tab - the tab to bookmark.
- * @returns {Promise<boolean>} - whether the bookmark was successfully added.
- */
-export const addCurrentPage = async (tab: TabNode) => {
-  if (!tab.url) return;
-  
+export const addCurrentPage = async (tab: TabNode, parentId?: string): Promise<boolean> => {
+  if (!tab.url) return false;
   try {
     await chrome.bookmarks.create({
       title: tab.title,
       url: tab.url,
-      
+      parentId: parentId // لو مبعتوش، الكروم هيحطه في 'Other Bookmarks' أوتوماتيك
     });
     return true;
   } catch (error) {
     console.error("Failed to add bookmark:", error);
+    return false;
+  }
+};
+
+export const removeNode = async (nodeId: string): Promise<boolean> => {
+  try {
+    await chrome.bookmarks.removeTree(nodeId);
+    return true;
+  } catch (error) {
+    console.error("Failed to remove:", error);
+    return false;
+  }
+};
+
+export const renameNode = async (nodeId: string, newTitle: string): Promise<boolean> => {
+  if (!newTitle.trim()) return false;
+  try {
+    await chrome.bookmarks.update(nodeId, { title: newTitle });
+    return true;
+  } catch (error) {
+    console.error("Failed to rename:", error);
+    return false;
+  }
+};
+
+export const moveNode = async (id: string, targetParentId: string) => {
+  try {
+    await chrome.bookmarks.move(id, { parentId: targetParentId });
+    return true;
+  } catch (error) {
+    console.error("Failed to move bookmark:", error);
     return false;
   }
 };
